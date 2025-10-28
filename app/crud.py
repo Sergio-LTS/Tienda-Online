@@ -53,3 +53,12 @@ async def crear_producto(db: AsyncSession, data: schemas.ProductoCreate):
     await db.commit()
     await db.refresh(nuevo)
     return nuevo
+
+async def listar_productos(db: AsyncSession, precio: float | None = None, stock: int | None = None):
+    stmt = select(models.Producto).where(models.Producto.activo == True)
+    if precio is not None:
+        stmt = stmt.where(models.Producto.precio <= precio)
+    if stock is not None:
+        stmt = stmt.where(models.Producto.stock >= stock)
+    result = await db.scalars(stmt)
+    return result.all()
