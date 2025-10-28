@@ -62,3 +62,9 @@ async def listar_productos(db: AsyncSession, precio: float | None = None, stock:
         stmt = stmt.where(models.Producto.stock >= stock)
     result = await db.scalars(stmt)
     return result.all()
+
+async def obtener_producto(db: AsyncSession, id: int):
+    producto = await db.get(models.Producto, id)
+    if not producto:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+    return producto
