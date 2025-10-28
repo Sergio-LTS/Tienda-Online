@@ -13,3 +13,7 @@ async def crear_categoria(db: AsyncSession, data: schemas.CategoriaCreate):
     await db.commit()
     await db.refresh(nueva)
     return nueva
+
+async def listar_categorias_activas(db: AsyncSession):
+    result = await db.scalars(select(models.Categoria).where(models.Categoria.activa == True))
+    return result.all()
