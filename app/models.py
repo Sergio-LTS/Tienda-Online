@@ -11,3 +11,11 @@ class Categoria(Base):
     activa = Column(Boolean, default=True)
 
     productos = relationship("Producto", back_populates="categoria", cascade="all, delete")
+
+class Producto(Base):
+    __tablename__ = "productos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String(150), nullable=False)
+    precio = Column(Float, nullable=False)
+    stock = Column(Integer, nullable=False)
