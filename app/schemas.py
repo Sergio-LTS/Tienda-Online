@@ -33,3 +33,10 @@ class ProductoBase(BaseModel):
 class ProductoCreate(ProductoBase):
     pass
 
+class ProductoUpdate(BaseModel):
+    nombre: str | None = None
+    precio: float | None = Field(default=None, ge=0)
+    stock: int | None = Field(default=None, ge=0)
+    descripcion: str | None = None
+    activo: bool | None = None
+    categoria_id: int | None = None
