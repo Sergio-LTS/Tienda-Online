@@ -41,3 +41,15 @@ async def eliminar_categoria(db: AsyncSession, id: int):
     await db.delete(categoria)
     await db.commit()
     return {"mensaje": "Categoría eliminada"}
+
+
+#Productooos
+async def crear_producto(db: AsyncSession, data: schemas.ProductoCreate):
+    cat = await db.get(models.Categoria, data.categoria_id)
+    if not cat or not cat.activa:
+        raise HTTPException(status_code=400, detail="Categoría inactiva o inexistente")
+    nuevo = models.Producto(**data.model_dump())
+    db.add(nuevo)
+    await db.commit()
+    await db.refresh(nuevo)
+    return nuevo
