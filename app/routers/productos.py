@@ -13,3 +13,10 @@ async def crear_producto(data: schemas.ProductoCreate, db: AsyncSession = Depend
 async def listar_productos(precio: float | None = None, stock: int | None = None, db: AsyncSession = Depends(get_db)):
     return await crud.listar_productos(db, precio, stock)
 
+@router.get("/{id}", response_model=schemas.ProductoOut)
+async def obtener_producto(id: int, db: AsyncSession = Depends(get_db)):
+    return await crud.obtener_producto(db, id)
+
+@router.put("/{id}", response_model=schemas.ProductoOut)
+async def actualizar_producto(id: int, data: schemas.ProductoUpdate, db: AsyncSession = Depends(get_db)):
+    return await crud.actualizar_producto(db, id, data)
