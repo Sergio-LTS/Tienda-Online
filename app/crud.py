@@ -33,3 +33,11 @@ async def actualizar_categoria(db: AsyncSession, id: int, data: schemas.Categori
     await db.commit()
     await db.refresh(categoria)
     return categoria
+
+async def eliminar_categoria(db: AsyncSession, id: int):
+    categoria = await db.get(models.Categoria, id)
+    if not categoria:
+        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+    await db.delete(categoria)
+    await db.commit()
+    return {"mensaje": "Categoría eliminada"}
