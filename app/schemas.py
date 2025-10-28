@@ -7,3 +7,7 @@ class CategoriaBase(BaseModel):
 
 class CategoriaCreate(CategoriaBase):
     pass
+
+class CategoriaUpdate(BaseModel):
+    nombre: str | None = None
+    descripcion: str | None = None
