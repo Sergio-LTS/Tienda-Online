@@ -44,4 +44,5 @@ class ProductoUpdate(BaseModel):
 class ProductoOut(ProductoBase):
     id: int
     activo: bool
-    class C
+    class Config:
+        from_attributes = True
