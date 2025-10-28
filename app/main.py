@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-app = FastAPI()
+from .routers import categorias, productos
 
-@app.get("/")
-def read_root():
-    return {"mensaje": "Hola desde FastAPI en Ubuntu!"}
+app = FastAPI(title="Tienda Online Async")
 
+app.include_router(categorias.router)
+app.include_router(productos.router)
