@@ -68,3 +68,13 @@ async def obtener_producto(db: AsyncSession, id: int):
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
+
+async def actualizar_producto(db: AsyncSession, id: int, data: schemas.ProductoUpdate):
+    producto = await db.get(models.Producto, id)
+    if not producto:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+    for k, v in data.model_dump(exclude_unset=True).items():
+        setattr(producto, k, v)
+    await db.commit()
+    await db.refresh(producto)
+    return producto
