@@ -10,3 +10,4 @@ class Categoria(Base):
     descripcion = Column(String(255))
     activa = Column(Boolean, default=True)
 
+    productos = relationship("Producto", back_populates="categoria", cascade="all, delete")
