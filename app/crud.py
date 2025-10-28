@@ -78,3 +78,11 @@ async def actualizar_producto(db: AsyncSession, id: int, data: schemas.ProductoU
     await db.commit()
     await db.refresh(producto)
     return producto
+
+async def eliminar_producto(db: AsyncSession, id: int):
+    producto = await db.get(models.Producto, id)
+    if not producto:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+    await db.delete(producto)
+    await db.commit()
+    return {"mensaje": "Producto eliminado"}
