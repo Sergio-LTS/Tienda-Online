@@ -19,3 +19,7 @@ class Producto(Base):
     nombre = Column(String(150), nullable=False)
     precio = Column(Float, nullable=False)
     stock = Column(Integer, nullable=False)
+    descripcion = Column(String(255))
+    activo = Column(Boolean, default=True)
+    categoria_id = Column(Integer, ForeignKey("categorias.id", ondelete="CASCADE"))
+    categoria = relationship("Categoria", back_populates="productos")
