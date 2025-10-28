@@ -11,3 +11,12 @@ class CategoriaCreate(CategoriaBase):
 class CategoriaUpdate(BaseModel):
     nombre: str | None = None
     descripcion: str | None = None
+    activa: bool | None = None
+
+
+class CategoriaOut(CategoriaBase):
+    id: int
+    activa: bool
+
+    class Config:
+        from_attributes = True
