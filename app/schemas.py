@@ -20,3 +20,16 @@ class CategoriaOut(CategoriaBase):
 
     class Config:
         from_attributes = True
+
+
+#Productooo
+class ProductoBase(BaseModel):
+    nombre: str = Field(..., min_length=3)
+    precio: float = Field(..., ge=0)
+    stock: int = Field(..., ge=0)
+    descripcion: str | None = None
+    categoria_id: int
+
+class ProductoCreate(ProductoBase):
+    pass
+
