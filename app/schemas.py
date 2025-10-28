@@ -40,3 +40,8 @@ class ProductoUpdate(BaseModel):
     descripcion: str | None = None
     activo: bool | None = None
     categoria_id: int | None = None
+
+class ProductoOut(ProductoBase):
+    id: int
+    activo: bool
+    class C
