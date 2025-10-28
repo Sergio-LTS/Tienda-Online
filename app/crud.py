@@ -17,3 +17,9 @@ async def crear_categoria(db: AsyncSession, data: schemas.CategoriaCreate):
 async def listar_categorias_activas(db: AsyncSession):
     result = await db.scalars(select(models.Categoria).where(models.Categoria.activa == True))
     return result.all()
+
+async def obtener_categoria(db: AsyncSession, id: int):
+    categoria = await db.get(models.Categoria, id)
+    if not categoria:
+        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+    return categoria
