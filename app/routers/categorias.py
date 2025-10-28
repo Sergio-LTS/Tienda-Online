@@ -21,3 +21,11 @@ async def listar_categorias(db: AsyncSession = Depends(get_db)):
 @router.get("/{id}", response_model=schemas.CategoriaOut)
 async def obtener_categoria(id: int, db: AsyncSession = Depends(get_db)):
     return await crud.obtener_categoria(db, id)
+
+@router.put("/{id}", response_model=schemas.CategoriaOut)
+async def actualizar_categoria(id: int, data: schemas.CategoriaUpdate, db: AsyncSession = Depends(get_db)):
+    return await crud.actualizar_categoria(db, id, data)
+
+@router.delete("/{id}")
+async def eliminar_categoria(id: int, db: AsyncSession = Depends(get_db)):
+    return await crud.eliminar_categoria(db, id)
