@@ -23,3 +23,13 @@ async def obtener_categoria(db: AsyncSession, id: int):
     if not categoria:
         raise HTTPException(status_code=404, detail="Categoría no encontrada")
     return categoria
+
+async def actualizar_categoria(db: AsyncSession, id: int, data: schemas.CategoriaUpdate):
+    categoria = await db.get(models.Categoria, id)
+    if not categoria:
+        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+    for k, v in data.model_dump(exclude_unset=True).items():
+        setattr(categoria, k, v)
+    await db.commit()
+    await db.refresh(categoria)
+    return categoria
