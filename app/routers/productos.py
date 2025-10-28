@@ -20,3 +20,7 @@ async def obtener_producto(id: int, db: AsyncSession = Depends(get_db)):
 @router.put("/{id}", response_model=schemas.ProductoOut)
 async def actualizar_producto(id: int, data: schemas.ProductoUpdate, db: AsyncSession = Depends(get_db)):
     return await crud.actualizar_producto(db, id, data)
+
+@router.delete("/{id}")
+async def eliminar_producto(id: int, db: AsyncSession = Depends(get_db)):
+    return await crud.eliminar_producto(db, id)
