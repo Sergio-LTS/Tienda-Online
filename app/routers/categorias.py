@@ -9,3 +9,15 @@ router = APIRouter(prefix="/categorias", tags=["categorias"])
 async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+@router.post("/", response_model=schemas.CategoriaOut, status_code=201)
+async def crear_categoria(data: schemas.CategoriaCreate, db: AsyncSession = Depends(get_db)):
+    return await crud.crear_categoria(db, data)
+
+@router.get("/", response_model=list[schemas.CategoriaOut])
+async def listar_categorias(db: AsyncSession = Depends(get_db)):
+    return await crud.listar_categorias_activas(db)
+
+@router.get("/{id}", response_model=schemas.CategoriaOut)
+async def obtener_categoria(id: int, db: AsyncSession = Depends(get_db)):
+    return await crud.obtener_categoria(db, id)
