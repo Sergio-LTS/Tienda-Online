@@ -7,7 +7,7 @@ from . import models, schemas
 async def crear_categoria(db: AsyncSession, data: schemas.CategoriaCreate):
     existe = await db.scalar(select(models.Categoria).where(models.Categoria.nombre == data.nombre))
     if existe:
-        raise HTTPException(status_code=409, detail="La categoría ya existe")
+        raise HTTPException(status_code=409, detail="La categoria ya existe")
     nueva = models.Categoria(**data.model_dump())
     db.add(nueva)
     await db.commit()
@@ -21,13 +21,13 @@ async def listar_categorias_activas(db: AsyncSession):
 async def obtener_categoria(db: AsyncSession, id: int):
     categoria = await db.get(models.Categoria, id)
     if not categoria:
-        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+        raise HTTPException(status_code=404, detail="Categoria no encontrada")
     return categoria
 
 async def actualizar_categoria(db: AsyncSession, id: int, data: schemas.CategoriaUpdate):
     categoria = await db.get(models.Categoria, id)
     if not categoria:
-        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+        raise HTTPException(status_code=404, detail="Categoria no encontrada")
     for k, v in data.model_dump(exclude_unset=True).items():
         setattr(categoria, k, v)
     await db.commit()
@@ -37,10 +37,10 @@ async def actualizar_categoria(db: AsyncSession, id: int, data: schemas.Categori
 async def eliminar_categoria(db: AsyncSession, id: int):
     categoria = await db.get(models.Categoria, id)
     if not categoria:
-        raise HTTPException(status_code=404, detail="Categoría no encontrada")
+        raise HTTPException(status_code=404, detail="Categoria no encontrada")
     await db.delete(categoria)
     await db.commit()
-    return {"mensaje": "Categoría eliminada"}
+    return {"mensaje": "Categoria eliminada"}
 
 
 #Productooos
